@@ -54,9 +54,10 @@ static __always_inline void fill_event(struct retransmit_event *e,
 /* kprobe: tcp_retransmit_skb(struct sock *sk, struct sk_buff *skb)    */
 /* 通常再送 (RTO タイムアウト / SACK)                                   */
 /* ------------------------------------------------------------------ */
-SEC("kprobe/tcp_retransmit_skb")
-int BPF_KPROBE(handle_tcp_retransmit_skb, struct sock *sk)
+SEC("tracepoint/tcp/tcp_retransmit_skb")
+int handle_tcp_retransmit_skb(struct trace_event_raw_tcp_event_sk_skb *ctx)
 {
+    struct sock *sk = (struct sock *)ctx->skaddr;
     struct retransmit_event *e;
 
     e = bpf_ringbuf_reserve(&events, sizeof(*e), 0);
@@ -72,9 +73,10 @@ int BPF_KPROBE(handle_tcp_retransmit_skb, struct sock *sk)
 /* kprobe: tcp_fastretrans_alert                                        */
 /* シグネチャ: void tcp_fastretrans_alert(struct sock *sk, ...)         */
 /* ------------------------------------------------------------------ */
-SEC("kprobe/tcp_fastretrans_alert")
-int BPF_KPROBE(handle_tcp_fastretrans_alert, struct sock *sk)
+SEC("tracepoint/tcp/tcp_fastretrans")
+int handle_tcp_fastretrans(struct trace_event_raw_tcp_event_sk *ctx)
 {
+    struct sock *sk = (struct sock *)ctx->skaddr;
     struct retransmit_event *e;
 
     e = bpf_ringbuf_reserve(&events, sizeof(*e), 0);
@@ -90,9 +92,10 @@ int BPF_KPROBE(handle_tcp_fastretrans_alert, struct sock *sk)
 /* kprobe: tcp_receive_reset                                            */
 /* シグネチャ: void tcp_receive_reset(struct sock *sk)                  */
 /* ------------------------------------------------------------------ */
-SEC("kprobe/tcp_receive_reset")
-int BPF_KPROBE(handle_tcp_receive_reset, struct sock *sk)
+SEC("tracepoint/tcp/tcp_receive_reset")
+int handle_tcp_receive_reset(struct trace_event_raw_tcp_event_sk *ctx)
 {
+    struct sock *sk = (struct sock *)ctx->skaddr;
     struct retransmit_event *e;
 
     e = bpf_ringbuf_reserve(&events, sizeof(*e), 0);
