@@ -39,6 +39,13 @@ enum {
     RETRANS_TYPE_RESET   = 2,
 };
 
+struct {
+    __uint(type, BPF_MAP_TYPE_ARRAY);
+    __type(key, __u32);
+    __type(value, struct retransmit_event);
+    __uint(max_entries, 1);
+} __retransmit_event_map SEC(".maps");
+
 /* ------------------------------------------------------------------ */
 /* Ring Buffer マップ                                                   */
 /* ------------------------------------------------------------------ */
