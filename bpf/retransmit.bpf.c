@@ -74,7 +74,7 @@ int handle_tcp_retransmit_skb(struct trace_event_raw_tcp_event_sk_skb *ctx)
 /* シグネチャ: void tcp_fastretrans_alert(struct sock *sk, ...)         */
 /* ------------------------------------------------------------------ */
 SEC("tracepoint/tcp/tcp_fastretrans")
-int handle_tcp_fastretrans(struct trace_event_raw_tcp_event_sk *ctx)
+int handle_tcp_fastretrans_alert(struct trace_event_raw_tcp_event_sk *ctx)
 {
     struct sock *sk = (struct sock *)ctx->skaddr;
     struct retransmit_event *e;
