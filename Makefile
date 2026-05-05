@@ -38,7 +38,7 @@ generate: $(VMLINUX_H)
 ## build: Go バイナリをビルドする
 build:
 	@echo "[build] Building $(BINARY)..."
-	CGO_ENABLED=0 go build $(LDFLAGS) -o $(BINARY) ./cmd/tcpretrans/
+	CGO_ENABLED=0 go build -tags ebpf $(LDFLAGS) -o $(BINARY) ./cmd/tcpretrans/
 	@echo "[build] Done: $(BINARY)"
 
 ## test: ユニットテストを実行する (eBPF ロードを要しないテストのみ)
