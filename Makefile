@@ -27,10 +27,10 @@ vmlinux:
 	bpftool btf dump file /sys/kernel/btf/vmlinux format c > $(VMLINUX_H)
 	@echo "[vmlinux] Done: $(VMLINUX_H)"
 
-## generate: eBPF C をコンパイルし、bpf2go で Go スタブを生成する
+## generate: eBPF C をコンパイルする
 generate: $(VMLINUX_H)
-	@echo "[generate] Running bpf2go..."
-	cd internal/bpf && GOPACKAGE=bpf go run github.com/cilium/ebpf/cmd/bpf2go -cc clang -go-package bpf -cflags "-O2 -g -Wall -target bpf -D__TARGET_ARCH_x86 -I ../../bpf/vmlinux -I /usr/include/x86_64-linux-gnu" Retransmit ../../bpf/retransmit.bpf.c -- -I../../bpf
+	@echo "[generate] Compiling eBPF C..."
+	$(CLANG) $(CLANG_FLAGS) -c $(BPF_SRC) -o $(BPF_OBJ)
 	@echo "[generate] Done"
 
 ## build: Go バイナリをビルドする
