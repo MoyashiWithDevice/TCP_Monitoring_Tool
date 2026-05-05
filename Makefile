@@ -11,7 +11,7 @@ BPF_OBJ    := bpf/retransmit.bpf.o
 VMLINUX_H  := bpf/vmlinux/vmlinux.h
 
 CLANG      := clang
-CLANG_FLAGS := -O2 -g -Wall -target bpf -D__TARGET_ARCH_x86_64 \
+CLANG_FLAGS := -O2 -g -Wall -target bpf -D__TARGET_ARCH_x86 \
                -I bpf/vmlinux \
                -I /usr/include/$(shell uname -m)-linux-gnu
 

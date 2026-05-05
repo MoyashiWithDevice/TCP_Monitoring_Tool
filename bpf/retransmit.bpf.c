@@ -8,7 +8,7 @@
 //   tcp_receive_reset       RST 受信
 //
 // 動作カーネル: Linux 6.0+
-// コンパイル:   clang -O2 -g -target bpf -D__TARGET_ARCH_x86_64 \
+// コンパイル:   clang -O2 -g -target bpf -D__TARGET_ARCH_x86 \
 //               -I vmlinux/ -c retransmit.bpf.c -o retransmit.bpf.o
 
 #include "vmlinux.h"
