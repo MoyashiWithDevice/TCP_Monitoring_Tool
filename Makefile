@@ -32,7 +32,7 @@ generate: $(VMLINUX_H)
 	@echo "[generate] Compiling eBPF C..."
 	$(CLANG) $(CLANG_FLAGS) -c $(BPF_SRC) -o $(BPF_OBJ)
 	@echo "[generate] Running go generate..."
-	go generate ./internal/bpf/...
+	go generate ./...
 	@echo "[generate] Done"
 
 ## build: Go バイナリをビルドする
