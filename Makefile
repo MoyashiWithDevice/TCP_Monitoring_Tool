@@ -30,7 +30,7 @@ vmlinux:
 ## generate: eBPF C をコンパイルし、bpf2go で Go スタブを生成する
 generate: $(VMLINUX_H)
 	@echo "[generate] Running bpf2go..."
-	cd internal/bpf && go run github.com/cilium/ebpf/cmd/bpf2go -cc clang -cflags "-O2 -g -Wall -target bpf -D__TARGET_ARCH_x86 -I ../../bpf/vmlinux -I /usr/include/x86_64-linux-gnu" Retransmit ../../bpf/retransmit.bpf.c -- -I../../bpf
+	cd internal/bpf && go run github.com/cilium/ebpf/cmd/bpf2go -cc clang -go-package bpf -cflags "-O2 -g -Wall -target bpf -D__TARGET_ARCH_x86 -I ../../bpf/vmlinux -I /usr/include/x86_64-linux-gnu" Retransmit ../../bpf/retransmit.bpf.c -- -I../../bpf
 	@echo "[generate] Done"
 
 ## build: Go バイナリをビルドする
