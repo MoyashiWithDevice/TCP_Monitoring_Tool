@@ -21,7 +21,7 @@
  * Go 側の RetransmitEvent と必ずレイアウトを一致させること。
  * __attribute__((packed)) は使わず、手動でパディングを入れる。
  */
-struct retransmit_event {
+typedef struct retransmit_event {
     __u64 timestamp_ns;   /* bpf_ktime_get_ns() */
     __u32 pid;            /* tgid (ユーザーから見た PID) */
     __u8  comm[16];       /* プロセス名 (最大 15 文字 + NUL) */
@@ -31,7 +31,7 @@ struct retransmit_event {
     __u16 dport;          /* 宛先   ポート (ネットワークバイトオーダー → 読み取り時に変換) */
     __u8  retrans_type;   /* RETRANS_TYPE_* */
     __u8  pad[3];         /* アライメント用パディング */
-};
+} retransmit_event;
 
 enum {
     RETRANS_TYPE_TIMEOUT = 0,
